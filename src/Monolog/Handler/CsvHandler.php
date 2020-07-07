@@ -33,6 +33,21 @@ class CsvHandler extends StreamHandler
         }
         $formatted = (array)$record['formatted'];
         if (version_compare(PHP_VERSION, '5.5.4', '>=') && !defined('HHVM_VERSION')) {
+
+            // Split del message per creare più colonne
+            $message = $formatted['message'];
+            $message = explode(",", $message);
+            
+            unset($formatted['message']);
+            unset($formatted['context']);
+            unset($formatted['extra']);
+
+            $i = 0;
+            foreach($message as $column) {
+                $formatted[$i] = $column;
+                $i++;
+            }
+
             fputcsv($stream, $formatted, static::DELIMITER, static::ENCLOSURE, static::ESCAPE_CHAR);
             return;
         }
