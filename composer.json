@@ -1,0 +1,30 @@
+{
+  "name": "enrigen/monologcsv",
+  "description": "Sends your logs to csv files",
+  "keywords": [
+    "log",
+    "csv",
+    "logging",
+    "psr-3"
+  ],
+  "homepage": "http://github.com/enrigen/monologcsv",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Enrico Gennari",
+      "homepage": "http://github.com/enrigen"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "monolog/monolog": "^2.0",
+    "psr/log": "~1.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "enrigen\\Monolog\\": "src/Monolog"
+    }
+  }
+}
