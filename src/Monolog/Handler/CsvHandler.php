@@ -33,8 +33,29 @@ class CsvHandler extends StreamHandler
         }
         $formatted = (array)$record['formatted'];
         if (version_compare(PHP_VERSION, '5.5.4', '>=') && !defined('HHVM_VERSION')) {
-
+            
             // Split del message per creare più colonne
+            $i = 0;
+
+            // Datetime
+            $datetime   = $formatted['datetime'];
+            $formatted[$i] = $datetime; $i++;
+            unset($formatted['datetime']);
+
+            // Log info
+            $level      = $formatted['level'];
+            $level_name = $formatted['level_name'];
+            $channel    = $formatted['channel'];
+
+            unset($formatted['level']);
+            unset($formatted['level_name']);
+            unset($formatted['channel']);
+
+            $formatted[$i] = $level; $i++;
+            $formatted[$i] = $level_name; $i++;
+            $formatted[$i] = $channel; $i++;
+
+            // Custom data
             $message = $formatted['message'];
             $message = explode(",", $message);
             
@@ -42,7 +63,6 @@ class CsvHandler extends StreamHandler
             unset($formatted['context']);
             unset($formatted['extra']);
 
-            $i = 0;
             foreach($message as $column) {
                 $formatted[$i] = $column;
                 $i++;
